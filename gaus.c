@@ -72,6 +72,8 @@ label:
                 if (s == F)
                 {
                     a.b = 0;
+                    printf("線形従属\n");
+                    exit(1);
                     return a;
                 }
             }
@@ -203,7 +205,7 @@ label:
             for (int k = 0; k < F; k++)
                 tmp += ((b.x[i][k]) * (inv_a.x[k][j])) % Pr;
             z[i][j] = tmp % Pr;
-            printf("%d ", z[i][j]);
+            //printf("%d ", z[i][j]);
             if (z[i][j] == 0 && i != j)
             {
                 ca++;
@@ -218,7 +220,7 @@ label:
         {
             inv_a.b = 0;
             printf("baka\n");
-            // exit(1);
+             exit(1);
             return inv_a;
         }
     }
@@ -267,6 +269,7 @@ label:
     if (count != F)
     {
         inv_a.b = 0;
+        exit(1);
         return inv_a;
     }
 

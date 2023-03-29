@@ -1977,7 +1977,7 @@ vec chen(vec f)
     {
         printpol((e));
         printf(" ==cheneee!\n");
-        // exit(1);
+         exit(1);
     }
     return e;
 }
@@ -2653,7 +2653,7 @@ vec sind(unsigned short zz[], int kk)
             if (zz[j] > 0)
             {
                 t1 += fls.x[i][j];
-                printf("s=%d,", fls.x[i][j]);
+                //printf("s=%d,", fls.x[i][j]);
             }
         }
         s[i] = t1 % Pr;
@@ -2664,7 +2664,7 @@ vec sind(unsigned short zz[], int kk)
         if(E==3)
         ww.x[i*E+2]=om.fugo.b2;
         */
-        printf("w2 %d %d %d %d \n", s[i], om.fugo.b0, om.fugo.b1, om.fugo.b2);
+        //printf("w2 %d %d %d %d \n", s[i], om.fugo.b0, om.fugo.b1, om.fugo.b2);
         // s[i*E+0]=om.fugo.b0;
         // s[i*E+1]=om.fugo.b1;
         om.u = 0;
@@ -2680,7 +2680,7 @@ vec sind(unsigned short zz[], int kk)
         for (int j = 0; j < K * E; j++)
         {
             a += (inv_S.x[i][j] * s[j]) % Pr;
-            printf("%d,", inv_S.x[i][j]);
+            //printf("%d,", inv_S.x[i][j]);
         }
         printf("\n");
         s2[i] = a % Pr;
@@ -3435,7 +3435,7 @@ void pk_gen()
                 S.x[i][j] = random() % Pr;
         }
         inv_S = genS(S);
-    } //while (inv_S.b == 0);
+    } //while (inv_S.d[1][1].fugo. == 0);
     // exit(1);
     
     /*
@@ -3947,7 +3947,7 @@ void mkerr(unsigned short *z1, int num)
         // printf ("l=%d\n", l);
         if (0 == z1[l])
         {
-            z1[l] = 2;
+            z1[l] = 1;
             // printf("l=%d\n", l);
             j++;
         }
