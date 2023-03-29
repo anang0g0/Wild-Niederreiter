@@ -3390,7 +3390,7 @@ void pk_gen()
     printf("sagemath で既約性を検査してください！\n");
 
     bdet();
-    CTX D = {0};
+    static CTX D = {0};
     uni test[M] = {0};
 
     // exit(1);
@@ -3458,7 +3458,7 @@ void pk_gen()
     for (int i = 0; i < M; i++)
         printf("i%d,", P[i]);
     printf("\n");
-    CTX temp = {0};
+    static CTX temp = {0};
     temp = kenzan(S, D, 2);
 
     for (int i = 0; i < M; i++)

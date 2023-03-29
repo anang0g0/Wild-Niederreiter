@@ -28,12 +28,12 @@ short oinb(short o)
 //     return (Pr - d) % Pr;
 // }
 
-CTX genS(CTX a)
+static CTX genS(CTX a)
 {
     // short a.x[F][F] = {{0,2},{2,2}}; //{{2,1,1,1},{1,1,2,2},{2,0,1,1},{1,2,1,1}}; //入力用の配列
-    CTX b = {0};
-    unsigned c[F][F] = {0};
-    CTX inv_a; // ここに逆行列が入る
+    static CTX b = {0};
+    static unsigned c[F][F] = {0};
+    static CTX inv_a; // ここに逆行列が入る
     short buf,A=0; // 一時的なデータを蓄える
     // int i, j, k; // カウンタ
     // int n = F;   // 配列の次数
