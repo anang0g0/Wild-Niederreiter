@@ -35,6 +35,7 @@
 #include "debug.c"
 #include "chash-p.c"
 #include "sha3.c"
+static CTX fls = {0};
 #include "gaus.c"
 #include "inv_mat.c"
 
@@ -67,9 +68,9 @@ unsigned short pp[13][4] = {{0, 0, 9, 2}, {0, 0, 11, 2}, {0, 0, 16, 3}, {0, 0, 1
 unsigned short pt[3] = {0, 1, 2};
 static CTX S, inv_S;
 static CTX big = {0};
-static CTX fls = {0};
-//static CTX lng ={0};
-// Gvecpa多項式
+
+// static CTX lng ={0};
+//  Gvecpa多項式
 static unsigned short g[K + 1] = {0};
 //{1,0,0,0,0};
 //{1,0,1,0,5};
@@ -1977,7 +1978,7 @@ vec chen(vec f)
     {
         printpol((e));
         printf(" ==cheneee!\n");
-         exit(1);
+        exit(1);
     }
     return e;
 }
@@ -2072,7 +2073,6 @@ void bdet()
     }
     return;
 }
-
 
 MT bin(unsigned short c[K])
 {
@@ -2395,7 +2395,6 @@ void decrypt(vec w)
 unsigned short vb[K * 2][N] = {0};
 unsigned short gt[K * 2][K * 2] = {0};
 
-
 vec synd(unsigned short zz[], int kk)
 {
     unsigned short syn[K] = {0}, s = 0;
@@ -2461,7 +2460,7 @@ vec sind(unsigned short zz[], int kk)
             if (zz[j] > 0)
             {
                 t1 += fls.x[i][j];
-                //printf("s=%d,", fls.x[i][j]);
+                // printf("s=%d,", fls.x[i][j]);
             }
         }
         s[i] = t1 % Pr;
@@ -2478,7 +2477,7 @@ vec sind(unsigned short zz[], int kk)
         for (int j = 0; j < K * E; j++)
         {
             a += (inv_S.x[i][j] * s[j]) % Pr;
-            //printf("%d,", inv_S.x[i][j]);
+            // printf("%d,", inv_S.x[i][j]);
         }
         printf("\n");
         s2[i] = a % Pr;
@@ -2677,7 +2676,6 @@ vec mkpol()
     return w;
 }
 
-
 static CTX transi(CTX H)
 {
     static CTX X = {0};
@@ -2776,7 +2774,7 @@ void printuni(uni a)
 // Niederreiter暗号の公開鍵を作る(Gvecpa)
 void pk_gen()
 {
-    int i, j, k, l;
+
     FILE *fp;
     unsigned char dd[E * K] = {0};
     vec w = {0};
@@ -2820,43 +2818,42 @@ void pk_gen()
             D.x[i * E + 1][j] = big.d[i][j].fugo.b1;
             if (E == 3)
                 D.x[i * E + 2][j] = big.d[i][j].fugo.b2;
-            printf("D=%d %d\n",D.x[i*E+1][j],big.d[i][j].fugo.b1);
+            printf("D=%d %d\n", D.x[i * E + 1][j], big.d[i][j].fugo.b1);
         }
     }
 
     Pgen();
     printf("pre\n");
 
-    
-    //do
+    // do
     {
         memset(inv_S.x, 0, sizeof(inv_S.x));
         memset(S.x, 0, sizeof(S.x));
-        
+
         for (int i = 0; i < K * E; i++)
         {
             for (int j = 0; j < K * E; j++)
                 S.x[i][j] = random() % Pr;
         }
-        inv_S = genS(S);
-    } //while (inv_S.d[1][1].b == 0);
+        // inv_S =
+        genS(S, &inv_S);
+    } // while (inv_S.d[1][1].b == 0);
     // exit(1);
-    
+
     Pgen();
     for (int i = 0; i < M; i++)
         printf("i%d,", P[i]);
     printf("\n");
+    // fls=D;
+    kenzan(S, &D, 2);
 
-    fls = kenzan(S, D, 2);
-
-    //H = kenzan(inv_S, fls, 2);
+    // H = kenzan(inv_S, fls, 2);
     memset(zz, 0, sizeof(zz));
     int y;
     vec z = {0};
     uni in[K] = {0};
     int a = 0;
     unsigned short ss[M] = {0};
-
 
     return;
 }
@@ -2973,8 +2970,6 @@ int printerr(vec r)
     return count;
 }
 
-
-
 void mkerr(unsigned short *z1, int num)
 {
     int j, l;
@@ -2995,7 +2990,6 @@ void mkerr(unsigned short *z1, int num)
         }
     }
 }
-
 
 unsigned short logx(unsigned short u)
 {
@@ -3227,7 +3221,6 @@ vec bibun_old(vec a)
     return (l);
 }
 
-
 unsigned short bexp(unsigned short a)
 {
     int i;
@@ -3268,11 +3261,11 @@ vec vv(int kk)
 
 aa:
     // exit(1);
-     r = mkpol();
-     //for( int i= 0; i < K; i++)
-     //pp.x[i] = rand() % N;
-     //mykey(r.x, pp);
-     //r.x[K] = 1;
+    r = mkpol();
+    // for( int i= 0; i < K; i++)
+    // pp.x[i] = rand() % N;
+    // mykey(r.x, pp);
+    // r.x[K] = 1;
     // printsage(r);
     // r=(tt);
     for (int i = 0; i < M; i++)
@@ -3291,9 +3284,9 @@ aa:
         tr[i] = oinv(ta[i]);
         // printf("%d,", tr[i]);
     }
- 
+
     printf("\nすげ、オレもうイキそ・・・\n");
- 
+
     for (int i = 0; i < M; i++)
     {
         for (int j = 0; j < K; j++)
@@ -3301,254 +3294,9 @@ aa:
             mat[j][i] = gf[mlt(fg[vb[j][i]], tr[i])];
         }
     }
- 
+
     return r;
 }
-
-/* input: in0, in1 in GF((2^m)^t)*/
-/* output: out = in0*in1 */
-void GF_mul(unsigned short *out, unsigned short *in0, unsigned short *in1)
-{
-    int i, j;
-
-    unsigned short prod[K * 2 - 1] = {0};
-
-    for (i = 0; i < K * 2 - 1; i++)
-        prod[i] = 0;
-
-    for (i = 0; i < K; i++)
-    {
-        for (j = 0; j < K; j++)
-            prod[i + j] = plus(prod[i + j], gf[mlt(fg[in0[i]], fg[in1[j]])]);
-    }
-    //
-
-    for (i = (K - 1) * 2; i >= K; i--)
-    {
-        if (K == 512)
-        {
-            // GF(2^512) from sage
-            prod[i - K + 8] = plus(prod[i - K + 8], prod[i]);
-            prod[i - K + 5] = plus(prod[i - K + 5], prod[i]);
-            prod[i - K + 2] = plus(prod[i - K + 2], prod[i]);
-            prod[i - K + 0] = plus(prod[i - K + 0], prod[i]);
-        }
-        if (K == 256)
-        {
-            // GF(2^256) from sage
-            prod[i - K + 10] = plus(prod[i - K + 10], prod[i]);
-            prod[i - K + 5] = plus(prod[i - K + 5], prod[i]);
-            prod[i - K + 2] = plus(prod[i - K + 2], prod[i]);
-            prod[i - K + 0] = plus(prod[i - K + 0], prod[i]);
-        }
-        if (K == 128)
-        {
-            // 128
-            prod[i - K + 7] = plus(prod[i - K + 7], prod[i]);
-            prod[i - K + 2] = plus(prod[i - K + 2], prod[i]);
-            prod[i - K + 1] = plus(prod[i - K + 1], prod[i]);
-            prod[i - K + 0] = plus(prod[i - K + 0], prod[i]);
-        }
-        if (K == 32)
-        {
-            // 32
-            prod[i - K + 15] = plus(prod[i - K + 15], prod[i]);
-            prod[i - K + 9] = plus(prod[i - K + 9], prod[i]);
-            prod[i - K + 7] = plus(prod[i - K + 7], prod[i]);
-            prod[i - K + 4] = plus(prod[i - K + 4], prod[i]);
-            prod[i - K + 3] = plus(prod[i - K + 3], prod[i]);
-            prod[i - K + 0] = plus(prod[i - K + 0], prod[i]);
-        }
-        if (K == 16)
-        {
-            // 16
-            prod[i - K + 5] = plus(prod[i - K + 5], prod[i]);
-            prod[i - K + 3] = plus(prod[i - K + 3], prod[i]);
-            prod[i - K + 2] = plus(prod[i - K + 2], prod[i]);
-            prod[i - K + 0] = plus(prod[i - K + 0], prod[i]);
-        }
-        if (K == 8)
-        {
-            // 8
-            prod[i - K + 4] = plus(prod[i - K + 4], prod[i]);
-            prod[i - K + 3] = plus(prod[i - K + 3], prod[i]);
-            prod[i - K + 2] = plus(prod[i - K + 2], prod[i]);
-            prod[i - K + 0] = plus(prod[i - K + 0], prod[i]);
-        }
-        if (K == 6)
-        {
-            // 8
-            prod[i - K + 4] = plus(prod[i - K + 4], prod[i]);
-            prod[i - K + 3] = plus(prod[i - K + 3], prod[i]);
-            prod[i - K + 1] = plus(prod[i - K + 1], prod[i]);
-            prod[i - K + 0] = plus(prod[i - K + 0], prod[i]);
-        }
-        if (K == 4)
-        {
-            // 4
-            prod[i - K + 1] = plus(prod[i - K + 1], prod[i]);
-            prod[i - K + 0] = plus(prod[i - K + 0], prod[i]);
-        }
-    }
-
-    for (i = 0; i < K; i++)
-        out[i] = prod[i];
-}
-
-/* input: f, element in GF((2^m)^t) */
-/* output: out, minimal polynomial of f */
-/* return: 0 for success and -1 for failure */
-int mykey(unsigned short *out, vec x)
-{
-    unsigned short m[K + 1][K] = {0};
-    MTX a = {0};
-    int i, j;
-
-    // fill matrix
-
-    m[0][0] = 1;
-
-    for (i = 1; i < K; i++)
-        m[0][i] = 0;
-
-    for (i = 0; i < K; i++)
-        m[1][i] = x.x[i];
-
-    for (j = 2; j <= K; j++)
-    {
-        GF_mul(m[j], m[j - 1], x.x);
-    }
-    // exit(1);
-    //
-    for (i = 0; i < K; i++)
-    {
-        for (j = 0; j < K + 1; j++)
-        {
-            a.x[i][j] = m[j][i];
-            printf("%d,", m[j][i]);
-        }
-        printf("\n");
-    }
-    printf("\n");
-    // exit(1);
-
-    vec v = {0};
-    v = renritu(a);
-
-    for (i = 0; i < K; i++)
-    {
-        out[i] = v.x[i];
-        printf("%d,", out[i]);
-    }
-    printf("\n");
-    return 0;
-}
-
-void v2(int kk)
-{
-    int i, j, l = -1;
-    vec f, r, tt, pp;
-    unsigned short tr[N], te[M] = {0};
-    ;
-    unsigned short ta[N] = {0};
-
-    printf("van der\n");
-
-    // while (l < 0)
-    {
-        for (i = 0; i < K; i++)
-            pp.x[i] = rand() % N;
-        mykey(tt.x, pp);
-        tt.x[K] = 1;
-        // l = ben_or(tt);
-        if (l == 0)
-        {
-            printf("\n");
-            printsage(tt);
-            printf(" ==irr\n");
-            // exit(1);
-        }
-    }
-    // f = (tt);
-    // exit(1);
-
-    l = 0;
-aa:
-    f = mkpol();
-    for (int j = 0; j < M; j++)
-    {
-        te[j] = eval(f, fg[j]);
-        if (te[j] == 0)
-            goto aa;
-    }
-
-    vec h = {0}, g = {0};
-    unsigned short tb[M] = {0}, tc[M] = {0}, td[M] = {0};
-
-bb:
-    g = mkpol();
-    for (int j = 0; j < M; j++)
-    {
-        td[i] = eval(g, fg[i]);
-
-        if (td[i] == 0)
-            goto bb;
-    }
-
-cc:
-    h = mkpol();
-
-    for (int j = 0; j < M; j++)
-    {
-        ta[i] = eval(h, fg[i]);
-        if (ta[i] == 0)
-            goto cc;
-    }
-
-    for (int j = 0; j < M; j++)
-    {
-        for (int i = 0; i < kk; i++)
-        {
-            vb[i][j] = gf[mlt(mltn(i, fg[j]), mltn(j, fg[te[j]]))];
-        }
-    }
-    for (int i = 0; i < M; i++)
-    {
-        for (int j = 0; j < K; j++)
-        { // この辺の添字は適当にやっても大丈夫
-            tc[i] = plus(gf[mltn(M - j - 1, fg[plus(random() % O, minus(td[i]))])], mltn(i, fg[ta[j]]));
-        }
-        tr[i] = gf[oinv(tc[i])];
-    }
-
-    for (int i = 0; i < M; i++)
-    {
-        int zero = 0;
-        for (int j = 0; j < K; j++)
-        {
-            mat[j][i] = gf[mlt(fg[vb[j][i]], fg[tr[i]])];
-            if (mat[j][i] == 0)
-                zero++;
-        }
-        if (zero == K)
-            goto aa;
-    }
-    for (int i = 0; i < K; i++)
-    {
-        for (int j = 0; j < M; j++)
-            printf("c%d,", mat[i][j]);
-        printf("\n");
-    }
-    printf("\n");
-    unsigned short zz[M] = {0};
-    mkerr(zz, T);
-    vec v = synd(zz, K);
-    ymo y = bm_itr(v.x);
-    chen(y.f);
-    // exit(1);
-    //  bdet();
-}
-
 
 vec to_vec(unsigned short a)
 {
@@ -3653,8 +3401,6 @@ void forney(ymo t)
     return;
 }
 
-
-
 // 言わずもがな
 int main(void)
 {
@@ -3677,8 +3423,7 @@ int main(void)
     // exit(1);
     // （謎）
     memset(mat, 0, sizeof(mat));
-     srand(clock());
-
+    srand(clock());
 
     mkmf();
     makefg();
@@ -3689,10 +3434,10 @@ int main(void)
     unsigned short z1[M] = {0};
     z1[1] = 1;
     z1[2] = 1;
-    vec z={0};
-    unsigned short ss[K*E]={0};
+    vec z = {0};
+    unsigned short ss[K * E] = {0};
     pk_gen();
-     mkerr(zz,T);
+    mkerr(zz, T);
     z = sind(zz, K * E);
     ymo o = bm_itr(z.x);
     v = chen(o.f);
@@ -3705,12 +3450,12 @@ int main(void)
     printf("\n");
     for (int i = 0; i < M; i++)
         rr[i] = ss[P[i]];
-    for (int i = 0; i < M; i++){
+    for (int i = 0; i < M; i++)
+    {
         if (rr[i] > 0)
             printf("%d,", i);
     }
     printf("\n");
-
 
     return 0;
 }
