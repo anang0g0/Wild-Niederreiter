@@ -63,7 +63,6 @@ typedef union
 {
   data fugo;
   unsigned short u;
-  bool b;
 } uni;
 
 typedef struct
@@ -105,13 +104,10 @@ typedef union
 typedef union
 {
   short x[K][M];
-  uni d[K][M];
-  bool b;
 } MTX;
 
 typedef union
 {
-  char x[K * EXP*2][M];
-  uni d[K*EXP][M];
-  bool b;
+  char x[K*EXP][M];
+  uni d[K][M];
 } CTX;

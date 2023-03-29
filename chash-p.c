@@ -25,12 +25,12 @@ static unsigned short gf[ORD], fg[ORD];
 unsigned char tmp[E * K];
 unsigned char pub[E * K];
 unsigned char BH[E * K];
-short mat[K * E][8192];
-short ma[K][8192];
-unsigned short P[M]={0};
-unsigned short inv_P[M]={0};
+static short mat[K * E][8192];
+static short ma[K][8192];
+static unsigned short P[M]={0};
+static unsigned short inv_P[M]={0};
 //short uu;
-short bm[K * E][8192];
+static short bm[K * E][8192];
 short bm2[K * E][8192];
 unsigned char aa[64]; //={ 148, 246, 52, 251, 16, 194, 72, 150, 249, 23, 90, 107, 151, 42, 154, 124, 48, 58, 30, 24, 42, 33, 38, 10, 115, 41, 164, 16, 33, 32, 252, 143, 86, 175, 8, 132, 103, 231, 95, 190, 61, 29, 215, 75, 251, 248, 72, 48, 224, 200, 147, 93, 112, 25, 227, 223, 206, 137, 51, 88, 109, 214, 17, 172};
 

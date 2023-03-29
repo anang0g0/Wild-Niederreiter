@@ -71,7 +71,7 @@ label:
                 s++;
                 if (s == F)
                 {
-                    a.b = 0;
+                    //a.b = 0;
                     printf("線形従属\n");
                     exit(1);
                     return a;
@@ -218,7 +218,7 @@ label:
         }
         else if (z[i][i] != 1)
         {
-            inv_a.b = 0;
+            //inv_a.b = 0;
             printf("baka\n");
              exit(1);
             return inv_a;
@@ -238,7 +238,7 @@ label:
         }
         printf("\n");
         exit(1);
-        inv_a.b = 0;
+        //inv_a.b = 0;
         return inv_a;
     }
 
@@ -268,13 +268,13 @@ label:
 
     if (count != F)
     {
-        inv_a.b = 0;
+        //inv_a.b = 0;
         exit(1);
         return inv_a;
     }
 
     exit(1);
-    inv_a.b = 1;
+    //inv_a.b = 1;
     return inv_a;
 }
 

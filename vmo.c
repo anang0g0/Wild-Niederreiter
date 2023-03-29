@@ -68,9 +68,9 @@ unsigned short pt[3] = {0, 1, 2};
 static CTX S, inv_S;
 static CTX big = {0};
 static CTX fls = {0};
-static CTX lng ={0};
+//static CTX lng ={0};
 // Gvecpa多項式
-static unsigned short g[K + 1] = {1, 2, 3, 4, 6};
+static unsigned short g[K + 1] = {0};
 //{1,0,0,0,0};
 //{1,0,1,0,5};
 //{1};
@@ -2070,129 +2070,9 @@ void bdet()
             // big.x[j][i] = mat[j][i];
         }
     }
-
-    printf("\n");
-    /*
-    // #pragma omp parallel for
-    for (int j = 0; j < K; j++)
-    {
-        for (int i = 0; i < M; i++)
-            printf("%d ", big.d[j][i].fugo.b0);
-        printf("\n");
-        for (int i = 0; i < M; i++)
-            printf("%d ", big.d[j][i].fugo.b1);
-        printf("\n");
-        if(E==3){
-        for (int i = 0; i < M; i++)
-            printf("%d ", big.d[j][i].fugo.b2);
-        printf("\n");
-        }        // fwrite(dd, 1, E * K, ff);
-    }
-    */
-    for (i = 0; i < K; i++)
-    {
-        for (j = 0; j < M; j++)
-        {
-            printf("%d ", big.d[i][j].fugo.b0);
-            lng.x[i*E+0][j] = big.d[i][j].fugo.b0;
-        }
-        printf("\n");
-        for (j = 0; j < M; j++)
-        {
-            printf("%d ", big.d[i][j].fugo.b1);
-            lng.x[i*E+1][j] = big.d[i][j].fugo.b1;
-        }
-        printf("\n");
-        for (j = 0; j < M; j++)
-        {
-            lng.x[i*E+2][j] = big.d[i][j].fugo.b2;
-            printf("%d ", big.d[i][j].fugo.b2);
-        }
-        printf("\n");
-    }
-    //exit(1);
-    //  fclose(ff);
     return;
 }
 
-// バイナリ型パリティチェック行列を生成する
-static CTX bdet2()
-{
-    int i, j, k;
-    vec l = {0};
-    uni ll = {0};
-    unsigned char dd[E * K] = {0};
-    FILE *ff;
-    static CTX R = {0};
-
-    // ff = fopen("Hb.key", "wb");
-
-    for (int i = 0; i < M; i++)
-    {
-        for (int j = 0; j < K; j++)
-        {
-            ll = d2c(mat[j][i]);
-            // l = o2c(mat[i][j]);
-            //  #pragma omp parallel for
-            // for (int k= 0; k < E; k++)
-            {
-                R.d[j][i] = ll;
-                // R.d[i][j*E+0].u=ll.fugo.b0;
-                // R.d[i][j*E+1].u=ll.fugo.b1;
-                // R.d[i][j*E+2].u=ll.fugo.b2;
-                printf("V%d %d %d ", R.d[j][i].fugo.b0, R.d[j][i].fugo.b1, R.d[j][i].fugo.b2);
-                //
-            }
-        }
-    }
-    printf("\n");
-    for (int i = 0; i < M; i++)
-    {
-        // #pragma omp parallel for
-        for (int j = 0; j < K; j++)
-        {
-            printf("Xx%d,", R.d[j][i].u);
-            // printf("%d %d %d",R.d[j][i].,R.d[j][i].b1,R.d[j][i].b2);
-            //  dd[j] = BH[j][i];
-        }
-        // fwrite(dd, 1, E * K, ff);
-        printf("\n");
-    }
-
-    // fclose(ff);
-    return R;
-}
-
-static MTX bd2()
-{
-    int i, j, k, l;
-    unsigned char dd[E * K] = {0};
-    FILE *ff;
-    vec v = {0};
-    static MTX R = {0};
-
-    // ff = fopen("Hb.key", "wb");
-
-    // memset(BB.z,0,sizeof(BB.z));
-    for (int i = 0; i < M; i++)
-    {
-        for (int j = 0; j < K / 2 + 1; j++)
-        {
-            l = bm[j][i];
-            printf("bm==%d %d\n", l, j);
-
-            v = i2v(l);
-            // #pragma omp parallel for
-            for (int k = 0; k < E; k++)
-            {
-                R.x[i][j * E + k] = v.x[k];
-                // l = (l >> 1);
-            }
-        }
-    }
-
-    return R;
-}
 
 MT bin(unsigned short c[K])
 {
@@ -2657,16 +2537,6 @@ vec sind(unsigned short zz[], int kk)
             }
         }
         s[i] = t1 % Pr;
-        // ww.x[i]=c2d(om);
-        /*
-        ww.x[i*E+0]=om.fugo.b0;
-        ww.x[i*E+1]=om.fugo.b1;
-        if(E==3)
-        ww.x[i*E+2]=om.fugo.b2;
-        */
-        //printf("w2 %d %d %d %d \n", s[i], om.fugo.b0, om.fugo.b1, om.fugo.b2);
-        // s[i*E+0]=om.fugo.b0;
-        // s[i*E+1]=om.fugo.b1;
         om.u = 0;
     }
     // exit(1);
@@ -2699,13 +2569,7 @@ vec sind(unsigned short zz[], int kk)
         ww.x[i] = c2d(u[i]);
         printf("ww2 %d %d %d %d\n", ww.x[i], u[i].fugo.b0, u[i].fugo.b1, u[i].fugo.b2);
     }
-    // exit(1);
-    /*
-    unsigned a=0;
-    printf("\n");
-    printf(" syn=============\n");
-    //
-*/
+
     return ww;
 }
 
@@ -3266,7 +3130,7 @@ void half(int kk)
 
 static CTX transi(CTX H)
 {
-    CTX X = {0};
+    static CTX X = {0};
 
     int count = 0;
     for (int i = 0; i < K; i++)
@@ -3370,18 +3234,6 @@ void pk_gen()
     // R = {0}, R_bin = {0},
     unsigned short zz[M] = {0};
     vv(K);
-    // zz[1] = 1;
-    // zz[2] = 1;
-   /*
-    mkerr(zz, T);
-    vec x = synd(zz, K);
-    ymo m = bm_itr(x.x);
-    chen(m.f);
-    */
-    // exit(1);
-    //  w = mkd(w, K);
-    //   w = mkg(K);
-    //   half(K / 2 + 1);
 
     printpol(w);
     printf("\n");
@@ -3418,8 +3270,10 @@ void pk_gen()
             D.x[i * E + 1][j] = big.d[i][j].fugo.b1;
             if (E == 3)
                 D.x[i * E + 2][j] = big.d[i][j].fugo.b2;
+            printf("D=%d %d\n",D.x[i*E+1][j],big.d[i][j].fugo.b1);
         }
     }
+
     Pgen();
     printf("pre\n");
 
@@ -3435,49 +3289,17 @@ void pk_gen()
                 S.x[i][j] = random() % Pr;
         }
         inv_S = genS(S);
-    } //while (inv_S.d[1][1].fugo. == 0);
+    } //while (inv_S.d[1][1].b == 0);
     // exit(1);
     
-    /*
-        unsigned short sa[4][4] = {{0,0,1,1},{2,0,1,0},{1,2,1,2},{0,0,1,2}};
-        unsigned short ans[4][4] = {{1, 0, 2, 0}, {0, 0, 2, 2}, {2, 1, 0, 0}, {2, 1, 2, 1}};
-        for (int k = 0; k < F; k++)
-        {
-            for (int j = 0; j < F; j++)
-                S.x[k][j] = sa[k][j];
-        }
-        inv_S=genS(S);
-        if(inv_S.b==0){
-        printf("baka\n");
-        exit(1);
-        }
-        // S.x[4][4]={{1,2,3,4},{1,2,3,4},{1,2,3,4},{1,2,3,4}};
-    exit(1);
-    */
     Pgen();
     for (int i = 0; i < M; i++)
         printf("i%d,", P[i]);
     printf("\n");
-    static CTX temp = {0};
-    temp = kenzan(S, D, 2);
 
-    for (int i = 0; i < M; i++)
-    {
-        for (int j = 0; j < K * E; j++)
-            fls.x[j][i] = temp.x[j][P[i]];
-    }
-    for (int i = 0; i < K * E; i++)
-    {
-        for (int j = 0; j < M; j++)
-        {
-            printf("%d,", fls.x[i][j]);
-            // printuni((H.d[i][j]));
-        }
-        printf("\n");
-    }
-    printf("\n\n");
+    fls = kenzan(S, D, 2);
 
-    H = kenzan(inv_S, fls, 2);
+    //H = kenzan(inv_S, fls, 2);
     memset(zz, 0, sizeof(zz));
     int y;
     vec z = {0};
@@ -3485,25 +3307,6 @@ void pk_gen()
     int a = 0;
     unsigned short ss[M] = {0};
 
-     mkerr(zz,T);
-    z = sind(zz, K * E);
-    ymo o = bm_itr(z.x);
-    v = chen(o.f);
-    unsigned short rr[M] = {0};
-    for (int i = 0; i < T; i++)
-        ss[v.x[i]] = 1;
-    for (int i = 0; i < M; i++)
-        if (ss[i] > 0)
-            printf("%d,", i);
-    printf("\n");
-    for (int i = 0; i < M; i++)
-        rr[i] = ss[P[i]];
-    for (int i = 0; i < M; i++){
-        if (rr[i] > 0)
-            printf("%d,", i);
-    }
-    printf("\n");
-    exit(1);
 
     return;
 }
@@ -5386,7 +5189,6 @@ int ind(unsigned short a)
     return logx(a) + 1;
 }
 
-
 // 言わずもがな
 int main(void)
 {
@@ -5394,7 +5196,6 @@ int main(void)
     unsigned short zz[M] = {0};
     vec r = {0}, g = {0};
     vec v = {0}, x = {0}, f = {0};
-    static CTX R = {0}, OO = {0}; //, S = {0}, inv_S = {0};
     unsigned short s[K + 1] = {0, 3, 0, 6, 0};
     static data d = {17, 23, 31}; //, dd[K * 3][N] = {0};
     uni e = {d};
@@ -5411,18 +5212,8 @@ int main(void)
     // （謎）
     memset(mat, 0, sizeof(mat));
      srand(clock());
-    /*
-    R=lu();
-    OO=genS(R);
-    OO=kenzan(R,OO,1);
-    for(int i=0;i<F;i++){
-    for(int j=0;j<F;j++)
-    printf("%d ",OO.x[i][j]);
-    printf("\n");
-    }
-    printf("\n");
-    exit(1);
-    */
+
+
     mkmf();
     makefg();
     de();
@@ -5432,331 +5223,28 @@ int main(void)
     unsigned short z1[M] = {0};
     z1[1] = 1;
     z1[2] = 1;
+    vec z={0};
+    unsigned short ss[K*E]={0};
     pk_gen();
-    exit(1);
-
-    // big = fls;
-    int count = 0;
-    uni on[4] = {0};
-    unsigned short es = 0;
-    unsigned short ee[K] = {0};
-
-    for (int i = 0; i < K * E; i++)
-    {
-        for (int j = 0; j < M; j++)
-        {
-            printf("%d ", OO.x[i][j]);
-        }
-        on[count].fugo.b0 = (OO.x[i * E + 0][3] + OO.x[i][6]) % Pr;
-        on[count].fugo.b1 = (OO.x[i * E + 1][3] + OO.x[i + 1][6]) % Pr;
-        on[count++].fugo.b2 = 0;
-        printf("\n");
-    }
-    printf("aaaaaaaaaaaaaaaaaaaaaaaaaa\n");
-    for (i = 0; i < K; i++)
-        v.x[i] = c2d(on[i]);
-    ymo u = bm_itr(v.x);
-    chen(u.f);
+     mkerr(zz,T);
+    z = sind(zz, K * E);
+    ymo o = bm_itr(z.x);
+    v = chen(o.f);
+    unsigned short rr[M] = {0};
+    for (int i = 0; i < T; i++)
+        ss[v.x[i]] = 1;
+    for (int i = 0; i < M; i++)
+        if (ss[i] > 0)
+            printf("%d,", i);
     printf("\n");
-    exit(1);
-
-    transi(OO);
-    // exit(1);
-    unsigned short ss[K * E] = {0};
-    for (int i = 0; i < K * E; i++)
-    {
-        for (int j = 0; j < M; j++)
-        {
-            if (z1[j] > 0)
-                ss[i] = (ss[i] + big.x[i][j]) % Pr;
-        }
-        printf("%d,", ss[i]);
+    for (int i = 0; i < M; i++)
+        rr[i] = ss[P[i]];
+    for (int i = 0; i < M; i++){
+        if (rr[i] > 0)
+            printf("%d,", i);
     }
     printf("\n");
-    // exit(1);
 
-    // big =
-    pk_gen();
-    uni op[K] = {0};
-    memset(zz, 0, sizeof(zz));
-    memset(x.x, 0, sizeof(x.x));
-    memset(v.x, 0, sizeof(v.x));
-    mkerr(zz, T);
-    // zz[1] = 1;
-    // zz[2] = 1;
-    //  big=OO;
-    v = sind(zz, K);
-    for (int i = 0; i < K * E; i++)
-    {
-        for (int j = 0; j < K * E; j++)
-        {
-            x.x[i] = (x.x[i] + inv_S.x[i][j] * v.x[j]) % Pr;
-        }
-    }
-    unsigned short oo[K] = {0};
-    for (int i = 0; i < K; i++)
-    {
-        op[i].fugo.b0 = x.x[i * E];
-        op[i].fugo.b1 = x.x[i * E + 1];
-        op[i].fugo.b2 = 0;
-        oo[i] = c2d(op[i]);
-    }
-    ymo yy = bm_itr(oo);
-    chen(yy.f);
-    exit(1);
-
-    for (int i = 0; i < K * E; i++)
-        printf("!%d,", op[i].fugo.b1);
-    printf("\n");
-    for (int i = 0; i < K * E; i++)
-        printf("!%d,", op[i].fugo.b2);
-    printf("\n");
-    for (int i = 0; i < K * E; i++)
-    {
-        for (int j = 0; j < M; j++)
-            printf("%d ", inv_S.x[i][j]);
-        printf("\n");
-    }
-    printf("\n");
-    exit(1);
-
-    for (int i = 0; i < K * E; i++)
-    {
-        for (int j = 0; j < M; j++)
-        {
-            printf("%d ", (OO.x[i][j]));
-        }
-        printf("\n");
-        // for(int j=0;j<M;j++)
-        // printf("%d ",OO.d[i][j].fugo.b2);
-        // printf("\n");
-    }
-    // exit(1);
-
-    //---------------------------------------------------20230325
-    // exit(1);
-    for (int i = 0; i < O; i++)
-        if (gf[mlt(fg[5], fg[i])] == 2)
-            printf("%d\n", i);
-    // printf("1331=%d\n",c2o(o2c(dick[fg[1331]])));
-    // exit(1);
-    //   次元KのGvecpa符号の検査行列を生成する
-    // van(K);
-    // v2(K);
-    f = vv(K);
-    // exit(1);
-    int j;
-    static vec cc = {0};
-    printf("%d\n", minus(3));
-    // exit(1);
-    // test1();
-    // exit(1);
-
-    vec v1 = {0}, v2 = {0}, x1 = {0}, x2 = {0};
-    int it = 0;
-    while (1)
-    {
-        //    big=R;
-        //   エラーベクトルの初期化
-        memset(zz, 0, sizeof(zz));
-        //   重みTのエラーベクトルを生成する
-        // mkerr(zz, T);
-        // for (int i = 0; i < K / 2; i++)
-        //    zz[i] = i + 1;
-        // zz[0] = 1;
-        mkerr(zz, T);
-        // zz[1] = 4;
-        // zz[2] = 1;
-        //  r = sind(zz, K);
-        printpol(r);
-        printf(" ===r\n");
-        // x = synd(zz, K);
-        printpol(x);
-        printf(" ===x\n");
-        // exit(1);
-
-        int u;
-        uni let = {0};
-        unsigned short h[K * E][M] = {0};
-        vec me = {0}, z;
-        memset(v.x, 0, sizeof(v.x));
-        memset(x.x, 0, sizeof(x.x));
-        // r = synd(zz, K);
-
-        // r=d2v(r.x);
-        for (int i = 0; i < K; i++)
-        {
-            for (int j = 0; j < M; j++)
-            {
-                h[i * E][j] = inv_S.x[i * E][j];
-                h[i * E + 1][j] = inv_S.x[i * E + 1][j];
-                h[i * E + 2][j] = inv_S.x[i * E + 2][j];
-            }
-            let.u = r.x[i];
-            me.x[i * E] = let.fugo.b0;
-            me.x[i * E + 1] = let.fugo.b1;
-            me.x[i * E + 2] = let.fugo.b2;
-        }
-
-        for (int i = 0; i < K * E; i++)
-        {
-            u = 0;
-            for (int k = 0; k < K * E; k++)
-                u = (u + me.x[k] * inv_S.x[k][i]) % Pr;
-            z.x[i] = u % Pr;
-        }
-        // exit(1);
-        uni dd[K] = {0};
-        vec hi = {0};
-        for (int i = 0; i < K; i++)
-        {
-            dd[i].fugo.b0 = z.x[i * E];
-            dd[i].fugo.b1 = z.x[i * E + 1];
-            dd[i].fugo.b2 = z.x[i * E + 2];
-            hi.x[i] = dd[i].u;
-        }
-        x = synd(zz, K);
-        printpol(x);
-        printf(" ===x\n");
-        printpol(hi);
-        printf(" ===hi\n");
-        // exit(1);
-
-        // exit(1);
-        /*
-        printpol(bibun_old(oo.f));
-        printf("   bibun\n");
-        printpol(bib(oo.f));
-        printf("  bib\n");
-
-        exit(1);
-        printf("   %d\n", eval(bib(oo.f), gf[v.x[0]]));
-        printf("   %d\n", gf[mlt(fg[eval(bib(oo.f), v.x[0])],fg[eval(oo.g, v.x[0])])]);
-        //exit(1);
-        //forney(v);
-        x=bibun_old(oo.f);
-        printf("ixi=%d\n",gf[oinv(gf[mlt(fg[eval(x,v.x[0])],fg[eval(oo.g,v.x[0])])])]);
-        exit(1);
-        */
-        /*
-            uni vv[K]={0};
-            for (int i = 0; i < K*3; i += 3)
-            {
-                vv[i].fugo.b0 = v.x[i + 0];
-                vv[i].fugo.b1 = v.x[i + 1];
-                vv[i].fugo.b2 = v.x[i + 2];
-                r.x[i] = vv[i].u;
-                printf("r%d", r.x[i]);
-            }
-            printf("\n");
-        */
-        // r=sin(zz,OO);
-        //  exit(1);
-        // r=dec(r.x);
-        // printpol(v);
-        // exit(1);
-
-        memset(zz, 0, sizeof(zz));
-        mkerr(zz, T);
-        // for(i=1;i<T+1;i++)
-        // zz[i]=i;
-        /*
-        zz[1] = 1;
-        zz[2] = 1;
-        zz[3] = 1;
-        zz[4]=1;
-        zz[5]=1;
-        */
-        vec c = {0};
-        c.x[T * 2] = 1;
-        r = synd(zz, K);
-        for (int i = 0; i < M; i++)
-        {
-            if (zz[i] > 0)
-                printf("aieu=%d %d\n", i, zz[i]);
-        }
-        printpol(r);
-        printf("\n");
-        // exit(1);
-        ymo t = bm_itr(r.x);
-        vec ll = r;
-        // unsigned short u;
-        printpol((t.h));
-        printf("  trf\n");
-        r = chen(t.f);
-        for (int i = 0; i < M; i++)
-            if (zz[i] > 0)
-                printf("err=%d\n", i);
-        exit(1);
-        t.f = bibun_old(r);
-        printpol(t.f);
-        printf("\n");
-        // exit(1);
-        for (int i = 0; i < T; i++)
-        {
-            // u = gf[oinv(mlt(fg[eval(t.g,r.x[i])],fg[eval(t.f,r.x[i])])))];
-            u = gf[mlt(fg[eval(t.h, r.x[i])], oinv(eval(t.f, r.x[i])))];
-            printf("u=%d %d %d\n", u, gf[(logx(u) + 3) % (O - 1) + 1], r.x[i]);
-        }
-        exit(1);
-        /*
-        r=vmul(r,t.f);
-        r=deli(r,c);
-        printsage(r);
-        printf("  --r\n");
-        //exit(1);
-        printpol(t.g);
-        printf(" t.g\n");
-        printf("%d ans1\n",gf[mlt(fg[eval(r,8)],oinv(7))]);
-        printpol(t.h);
-        printf(" t.h\n");
-        printf("%d ans2\n",gf[mlt(fg[xtrace(r,5)],oinv(2))]);
-        //forney(t);
-        exit(1);
-        */
-
-        x = chen((t.f));
-        // exit(1);
-        vec ans = {0};
-        MTX ww = {0};
-        for (int i = 0; i < T + 1; i++)
-        {
-            printf("i=%d %d \n", x.x[i], x.x[i] + 1);
-            ww.x[0][i] = gf[x.x[i] + 1];
-            ww.x[1][i] = gf[mlt(x.x[i] + 1, x.x[i] + 1)];
-            ww.x[i][2] = ll.x[i];
-            printf("b= %d %d\n", ww.x[0][i], ww.x[1][i]);
-        }
-        printpol(ll);
-        printf(" ===synd\n");
-        sol(ww);
-        exit(1);
-        // yes(t);
-        //  exit(1);
-
-        vec rr = {0};
-        for (int i = 0; i < T; i++)
-        {
-            rr.x[x.x[i]] = 1; // x.x[i];
-            printf("x=%d\n", x.x[i]);
-        }
-        for (int i = 0; i < M; i++)
-        {
-            if ((zz[i] > 0) && zz[i] != rr.x[i])
-            {
-                printf("cheki=%d %d %d\n", i, zz[i], rr.x[i]);
-                printf("baka\n");
-                exit(1);
-            }
-        }
-        exit(1);
-
-        if (it == 1000)
-        {
-            printf("いいっ！\n");
-            break;
-        }
-    }
 
     return 0;
 }
