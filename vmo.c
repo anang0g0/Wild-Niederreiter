@@ -4107,29 +4107,6 @@ vec bibun_old(vec a)
     return (l);
 }
 
-vec yes(ymo t)
-{
-    vec e = vmul(t.g, t.h);
-    vec b2 = bib((t.f));
-    vec b = bibun_old((t.f));
-    printsage((t.f));
-    printf("\n");
-    printsage((b));
-    printf("\n");
-    vec ixi = {0};
-    int count = 0;
-    for (int i = 0; i < N; i++)
-    {
-        if (eval((e), i) == 1)
-        // if(a[i]>0)
-        {
-            printf("ixi=%d %d\n", gf[oinv(gf[mlt(fg[eval((b), i)], fg[eval((t.g), i)])])], i); // gf[mlt(oinv(eval((b),i)),fg[eval((t.h),i)])],i);
-            ixi.x[i] = gf[mlt(oinv(eval((b), i)), fg[eval((t.h), i)])];
-        }
-    }
-
-    return ixi;
-}
 
 vec bms(unsigned short s[])
 {
@@ -4318,82 +4295,6 @@ vec bma(unsigned short s[], int kk)
     return (lo[j - 1]);
 }
 
-vec rev(vec f)
-{
-    unsigned short i, tmp, j = 0, c[512] = {0}, d[512] = {0}, count = 0;
-    vec v = {0}, x = {0};
-    vec w = {0};
-
-    v = (f);
-
-    j = deg(f) + 1;
-    printf("d=");
-    for (int i = 0; i < j; i++)
-    {
-        // d[f.x[i].n]=f.x[i];
-        // c[count]=f.x[i];
-        d[j - 1 - i] = v.x[i];
-        printf("%d,", v.x[i]);
-        count++;
-    }
-    printf("\n");
-    printf("c=");
-    // memset(v.x,0,sizeof(v.x));
-    for (int i = 0; i < count; i++)
-    {
-        x.x[i] = d[i];
-        printf("%d,", d[i]);
-    }
-    printf("\n");
-    // for(i=0;i<count;i++)
-    // v.x[d[count-i-1]]=d[i];
-    w = setpol(v.x, K + 1);
-    // v=(w);
-    printpol((w));
-    printf(" ==rev?\n");
-    // exit(1);
-    // f=(v);
-
-    return x;
-}
-
-vec sendrier(unsigned short zz[N], int kk)
-{
-    unsigned short syn[K / 2 + 1] = {0}, s = 0, rt[K * 3] = {0};
-    int i, j, k;
-    vec f = {0};
-    vec v = {0}, x[K * 2] = {0};
-
-    for (int j = 0; j < N; j++)
-    {
-        if (zz[j] > 0)
-        {
-            // memcpy(syn, bm[j], sizeof(syn));
-            printf("bm_in_sen= %d || ", j);
-            for (int i = 0; i < K / 2 + 1; i++)
-            {
-                syn[i] ^= bm[i][j];
-                printf("%d,", syn[i]);
-            }
-        }
-    }
-    printf("\n");
-    v = newhalf(syn);
-    // printf("%d\n",j);
-    for (int k = 0; k < kk; k++)
-        rt[k] = v.x[k];
-    //}
-    // exit(1);
-    // printf ("%d\n", j);
-    // printf ("\n");
-    //}
-
-    f = setpol(rt, kk);
-    // printpol((f));
-    // printf(" syn=============\n");
-
-    return f;
-}
 
 unsigned short bexp(unsigned short a)
 {
@@ -4568,11 +4469,11 @@ vec vv(int kk)
 
 aa:
     // exit(1);
-    r = mkpol();
-    // for( int i= 0; i < K; i++)
-    // pp.x[i] = rand() % N;
-    // mykey(r.x, pp);
-    // r.x[K] = 1;
+     r = mkpol();
+     //for( int i= 0; i < K; i++)
+     //pp.x[i] = rand() % N;
+     //mykey(r.x, pp);
+     //r.x[K] = 1;
     // printsage(r);
     // r=(tt);
     for (int i = 0; i < M; i++)
@@ -4591,16 +4492,9 @@ aa:
         tr[i] = oinv(ta[i]);
         // printf("%d,", tr[i]);
     }
-    printf("%d %d\n", r.x[0], r.x[K]);
-    // exit(1);
-    memset(pp.x, 0, sizeof(pp.x));
-    // for(int i=1;i<K+1;i++)
-    //     pp.x[i]=r.x[i];
-    ogt(r.x, K);
+ 
     printf("\nすげ、オレもうイキそ・・・\n");
-    // keygen(g);
-    // exit(1);
-
+ 
     for (int i = 0; i < M; i++)
     {
         for (int j = 0; j < K; j++)
@@ -4608,22 +4502,7 @@ aa:
             mat[j][i] = gf[mlt(fg[vb[j][i]], tr[i])];
         }
     }
-    /*
-        for (int i = 0; i < K; i++)
-        {
-            for (int j = 0; j < M; j++)
-            {
-                for (int k = 0; k < K; k++)
-                {
-                    mat[i][j] = plus(mat[i][j], gf[mlt(fg[gt[k][i]],fg[ma[k][j]])]);
-                }
-                printf("c%d,", mat[i][j]);
-            }
-            printf("\n");
-        }
-    */
-    // exit(1);
-    //  bdet();
+ 
     return r;
 }
 
@@ -4940,25 +4819,6 @@ aa:
     //  bdet();
 }
 
-int badd(int i, int j)
-{
-    int z = (i % 2 | (i >> 1)) & (j % 2 | (j >> 1));
-    int c = z ^ (i % 2 | j % 2);
-    int d = z ^ (i >> 1 | j >> 1);
-    c ^= (d << 1);
-
-    return c;
-}
-
-int bsub(int i, int j)
-{
-    int z = (i >> 1 | i % 2) & (j & 2 | j >> 1);
-    int c = z ^ (i % 2 | j >> 1);
-    int d = z ^ (i >> 1 | j % 2);
-    c ^= (d << 1);
-
-    return c;
-}
 
 vec to_vec(unsigned short a)
 {
@@ -5063,131 +4923,7 @@ void forney(ymo t)
     return;
 }
 
-vec deli(vec a, vec b)
-{
-    vec c = {0};
 
-    for (int i = 0; i < deg(b); i++)
-        c.x[i] = a.x[i];
-
-    return c;
-}
-
-void test1()
-{
-    unsigned short zz[M] = {0};
-
-    printf("aa %d \n", plus(6, 5));
-    // exit(1);
-
-    memset(zz, 0, sizeof(zz));
-    mkerr(zz, T);
-    // zz[1] = 1;
-    // zz[3] = 1;
-    //  zz[aa]=i;
-    vec cc = {0};
-    cc.x[T * 2] = 1;
-    // zz[1]=4;
-    vec x = synd(zz, K);
-    ymo oo = bm_itr(x.x);
-    vec v = chen(oo.f);
-    cc = deli(vmul(oo.f, x), cc);
-    printsage(x);
-    printf(" ====syn\n");
-    printsage(oo.f);
-    printf(" ====ffx\n");
-    exit(1);
-    for (int i = 0; i < O; i++)
-    {
-        int qt = eval(cc, gf[O - 1 - v.x[0]]);
-        printf("qt=%d\n", qt);
-        oo.f = bib(oo.f);
-        printpol(oo.f);
-        printf("\n");
-        int qt2 = eval(oo.f, gf[O - 1 - v.x[0]]);
-        printf("qt2=%d %d\n", qt2, gf[O - 1 - v.x[0]]);
-        printf("%d\n", gf[mlt(fg[qt], oinv(qt2))]);
-        exit(1);
-        // gf[mlt(fg[(xtrace(oo.h, fg[i]))], oinv(xtrace(oo.f,fg[i])))];
-        if (qt == zz[1] || qt == zz[3])
-            printf("ee %d %d\n", i, qt);
-    }
-    exit(1);
-    int uu = gf[mlt(fg[eval(oo.g, v.x[0])], fg[eval(oo.h, v.x[0])])];
-    printf("dd %d\n", uu);
-    printpol(oo.g);
-    printf("\n");
-    if (uu == 1)
-    {
-        uu = gf[oinv(gf[mlt(fg[eval(oo.g, fg[v.x[1]])], fg[eval(oo.f, fg[v.x[1]])])])];
-        printf("%d %d \n", uu, gf[oinv(gf[mlt(fg[eval(oo.f, v.x[0])], fg[eval(oo.h, v.x[0])])])]);
-        exit(1);
-        oo.h = kof(equ(vLT(oo.h).a, 2), oo.h);
-        printpol(oo.h);
-        printf("\n");
-        printpol(oo.f);
-        printf("\n");
-        printpol(oo.g);
-        printf("\n");
-    }
-    // printpol(oo.g);
-    // printf("\n");
-    exit(1);
-    for (int j = 1; j < O; j++)
-    {
-        // for (int i = 1; i < O; i++)
-        {
-            printpol(oo.f);
-            printf(" =====oo.f\n");
-            // exit(1);
-            vec c = {0};
-            c.x[T * 2] = 1;
-            vec xv = (vmul(x, oo.f));
-            printpol(xv);
-            printf(" ==Uh!\n");
-            for (int i1 = 0; i1 < T; i1++)
-                printf("%d,", v.x[i1]);
-            printf("\n");
-            // exit(1);
-            oo.h = kof((Pr), oo.h);
-            printpol(oo.h);
-            printf(" =====Ub2oo.h\n");
-            printpol(oo.g);
-            printf(" =====Ub2oo.g\n");
-            printpol(bib(oo.f));
-            printf(" =====Ub2bib.f\n");
-            printpol(bibun_old(oo.f));
-            printf(" =====Ub2ibun.f\n");
-            vec ff = {0};
-            ff.x[0] = 7;
-            ff.x[1] = 3;
-            printpol(xv);
-            printf(" ==U\n");
-            printpol(bibun_old(oo.f));
-            printf(" ==U2\n");
-            printpol(bib(oo.f));
-            printf(" ==U3\n");
-            printf("U%d\n", mlt(fg[eval(ff, 3)], oinv(eval(bib(oo.f), 3))));
-            printf("U%d\n", mlt(fg[eval(ff, 5)], oinv(eval(bib(oo.f), 5))));
-            printf("U%d\n", mlt(fg[eval(oo.h, 6)], oinv(eval(bib(oo.f), 6))));
-            printf("U%d\n", mlt(fg[eval(oo.h, 7)], oinv(eval(bib(oo.f), 7))));
-
-            exit(1);
-            for (int k = 0; k < T; k++)
-            {
-                if (logx(zz[v.x[k]]) == ((logx(eval(oo.h, v.x[k]))) + j) % (O - 1))
-                    printf("jaa===%d  %d  %d   %d  %d  %d   %d j=%d\n", zz[v.x[k]], logx(zz[v.x[k]]), gf[mlt(fg[eval(oo.h, v.x[k])], oinv(eval(bib(oo.f), v.x[k])))], logx(gf[oinv(xtrace(bibun_old(oo.f), v.x[k]))]) % (O - 1), logx(gf[oinv(xtrace(bib(oo.f), v.x[k]))]), (logx(gf[oinv(xtrace((oo.f), v.x[k]))])), logx(gf[oinv(xtrace(bib(oo.f), v.x[k]))]) % (O - 1), j);
-            }
-            // printf("%d  %d\n",gf
-            // printf("%d  %d\n",gf[mlt(fg[eval(oo.h,gf[2])],oinv(eval((oo.f),gf[2])))],gf[oinv(eval((oo.f),gf[2]))]);
-        }
-    }
-}
-
-int ind(unsigned short a)
-{
-    return logx(a) + 1;
-}
 
 // 言わずもがな
 int main(void)

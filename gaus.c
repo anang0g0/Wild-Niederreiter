@@ -63,7 +63,7 @@ label:
         if (a.x[i][i] == 0)
         {
             //a.x[i][i]=1;
-            printf("aa.x[%d][%d]=%d\n", i, i, a.x[i][i]);
+            //printf("aa.x[%d][%d]=%d\n", i, i, a.x[i][i]);
             int s = i;
             // short tmp[F] = {0}, tt[F] = {0};
             while (a.x[s][i] == 0)
@@ -96,15 +96,7 @@ label:
             printf("buf baka\n");
             exit(1);
         }
-        /*
-        for(int j=0;j<F;j++){
-        for(int k=0;k<F;k++)
-        printf("%d ",a.x[j][k]);
-        printf("\n");
-        }
-        printf("\n");
-        */
-        printf("buf=%d\n", buf);
+        //printf("buf=%d\n", buf);
         // for(k=0;k<F;k++)
         if (buf > 0)
         {
@@ -139,55 +131,9 @@ label:
                         }
                     //printf("\n");
                 }
-            /*
-            //inv_a.x[0][0]=A;
-            for(int s=0;s<F;s++){
-            for(int t=0;t<F;t++)
-            printf("!%d ",inv_a.x[s][t]);
-             printf("\n");
-            }
-            for(int s=0;s<F;s++){
-            for(int t=0;t<F;t++)
-             printf("=%d ",a.x[s][t]);
-            printf("\n");
-            }
-            */
             }
         }
     }
-    //exit(1);
-    /*
-    printf("matrix\n");
-    for(int i=0;i<F;i++){
-    for(int j=0;j<F;j++)
-    printf("%d,",b.x[i][j]);
-    printf("\n");
-    }
-    printf("\n");
-    // 逆行列を出力
-    
-    printf("逆行列\n");
-    for (int i = 0; i < F; i++)
-    {
-        for (int j = 0; j < F; j++)
-        {
-            if (inv_a.x[i][j] < 0)
-                inv_a.x[i][j] += Pr;
-            printf(" %d", inv_a.x[i][j]);
-        }
-        printf("\n");
-    }
-    //exit(1);
-
-    for (int i = 0; i < F; i++)
-    {
-        for (int j = 0; j < F; j++)
-            printf("%d ", a.x[i][j]);
-        printf("\n");
-    }
-*/    
-    // exit(1);
-    // return inv_a;
 
     printf("検算\n");
     unsigned tmp = 0;
