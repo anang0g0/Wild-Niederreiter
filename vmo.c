@@ -636,8 +636,6 @@ vec vmod(vec f, vec g)
         return f;
     }
 
-    // printf ("in vmod\n");
-    // exit(1);
 
     int k = vLT(g).n;
     b = vLT(g);
@@ -2778,9 +2776,9 @@ void pk_gen()
     FILE *fp;
     unsigned char dd[E * K] = {0};
     vec w = {0};
-    static CTX Q = {0}, O_bin = {0};
-    // R = {0}, R_bin = {0},
     unsigned short zz[M] = {0};
+
+
     vv(K);
 
     printpol(w);
@@ -2799,16 +2797,6 @@ void pk_gen()
     static CTX H = {0};
 
     memset(zz, 0, sizeof(zz));
-    // zz[1] = 1;
-    // zz[3] = 1;
-    /*
-    mkerr(zz, T);
-    // exit(1);
-    x = zind(zz, K);
-    ymo tt = bm_itr(x.x);
-    chen(tt.f);
-    // exit(1);
-    */
     vec v = {0};
     for (int i = 0; i < K; i++)
     {
@@ -2825,7 +2813,7 @@ void pk_gen()
     Pgen();
     printf("pre\n");
 
-    // do
+     do
     {
         memset(inv_S.x, 0, sizeof(inv_S.x));
         memset(S.x, 0, sizeof(S.x));
@@ -2836,16 +2824,15 @@ void pk_gen()
                 S.x[i][j] = random() % Pr;
         }
         // inv_S =
-        genS(S, &inv_S);
-    } // while (inv_S.d[1][1].b == 0);
-    // exit(1);
+        
+    }  while (genS(S, &inv_S)==0);
 
     Pgen();
     for (int i = 0; i < M; i++)
         printf("i%d,", P[i]);
     printf("\n");
     // fls=D;
-    kenzan(S, &D, 2);
+    kenzan(&S, &D, 2);
 
     // H = kenzan(inv_S, fls, 2);
     memset(zz, 0, sizeof(zz));
@@ -3445,15 +3432,11 @@ int main(void)
     for (int i = 0; i < T; i++)
         ss[v.x[i]] = 1;
     for (int i = 0; i < M; i++)
-        if (ss[i] > 0)
-            printf("%d,", i);
-    printf("\n");
-    for (int i = 0; i < M; i++)
         rr[i] = ss[P[i]];
     for (int i = 0; i < M; i++)
     {
-        if (rr[i] > 0)
-            printf("%d,", i);
+        if (rr[i] > 0 || ss[i]>0)
+            printf("i=%d ans=%d,before= %d\n", i ,rr[i],ss[i]);
     }
     printf("\n");
 

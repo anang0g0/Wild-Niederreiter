@@ -177,28 +177,6 @@ label:
     }
 
     printf("もとの行列\n");
-    exit(1);
-    count = 0;
-    for (int i = 0; i < F; i++)
-    {
-        for (int j = 0; j < F; j++)
-        {
-            printf("%d ", b.x[i][j] % Pr);
-        }
-        printf("\n");
-    }
-    printf("\n");
-    // int count = 0;
-    for (int i = 0; i < F; i++)
-    {
-        for (int j = 0; j < F; j++)
-        {
-            printf("%d", z[i][j] % Pr);
-        }
-        printf("\n");
-        if (z[i][i] % Pr == 1)
-            count++;
-    }
 
     if (count != F)
     {
@@ -212,7 +190,7 @@ label:
     return 0; // inv_a;
 }
 
-void kenzan(CTX a, CTX *inv_a, int p)
+void kenzan(CTX *a, CTX *inv_a, int p)
 {
     unsigned tmp = 0;
     static CTX z = {0};
@@ -225,7 +203,7 @@ void kenzan(CTX a, CTX *inv_a, int p)
             {
                 tmp = 0;
                 for (int k = 0; k < F; k++)
-                    tmp += ((a.x[i][k] % Pr) * (inv_a->x[k][j] % Pr)) % Pr;
+                    tmp += ((a->x[i][k] % Pr) * (inv_a->x[k][j] % Pr)) % Pr;
                 fls.x[i][j] = tmp % Pr;
             }
         }
@@ -240,7 +218,7 @@ void kenzan(CTX a, CTX *inv_a, int p)
             {
                 tmp = 0;
                 for (int k = 0; k < F; k++)
-                    tmp += ((a.x[i][k] % Pr) * (inv_a->x[k][j] % Pr)) % Pr;
+                    tmp += ((a->x[i][k] % Pr) * (inv_a->x[k][j] % Pr)) % Pr;
                 fls.x[i][j] = tmp % Pr;
                 // printf("%d ", z.x[i][j]);
             }
